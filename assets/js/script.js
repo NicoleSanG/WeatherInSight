@@ -110,6 +110,21 @@ function localPreviousSearches() {
             `);
         }
     }
-    clickEventToPreviousButtons();
+    clickEventToPreviousButtons(); /// Set the click event for history buttons
 }
+//Function to set click events for history buttons
+function clickEventToPreviousButtons() {
+    $('#history button').on('click', function () {
+        searchInput.val($(this).data('location'));
+
+        $('#history button').removeClass('btn-info').addClass('btn-secondary');
+        $(this).removeClass('btn-secondary').addClass('btn-info');
+        getWeather();
+    });
+}
+
+
+
+
+
 
