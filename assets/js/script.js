@@ -154,6 +154,17 @@ function getWeather(event) {
             }
         });
 }
+//Function to clear local storage and reset buttons.
+function clearLocalStorageAndButtons() {
+    localStorage.removeItem('location'); //Clear local storage.
+    searchHistory.empty(); //Clear search history in HTML.
+
+    locationHistory.empty(); //Clear location history buttons.
+    localStorageArray = [];  //Clear previously searched terms array.
+
+//Add click event to reset buttons
+    clickEventToPreviousButtons();
+}
 
 
 
