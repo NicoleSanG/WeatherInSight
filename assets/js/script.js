@@ -36,17 +36,17 @@ function displayCurrentWeather(currentData) {
 function displayForecastWeather(forecastData) {
     console.log(forecastData);
     forecastWeather.html(''); //Clear any existing content within the element before adding new information
-//Filters the forecast data to show only information relevant to 12:00 noon.
+    //Filters the forecast data to show only information relevant to 12:00 noon.
     var forecastDays = forecastData.list.filter(filterByDateTime);
     console.log(forecastDays);
 
     var output = '';
-//For loop  to iterate through the forecast days that have been filtered.
+    //For loop  to iterate through the forecast days that have been filtered.
     for (let index = 0; index < forecastDays.length; index++) {
         var forecast = forecastDays[index];
         var forecastDay = dayjs(forecast.dt * 1000).format('DD/MM/YYYY');
         var weatherIcon = forecast.weather[0];
-// Add HTML structure for forecast day
+        // Add HTML structure for forecast day
         output += `
             <div class="forecast-item shadow-lg p-3 rb-5 bg-white rounded">
                 <p class="text-center mb-4 font-weight-bold">${forecastDay}</p>
@@ -57,7 +57,7 @@ function displayForecastWeather(forecastData) {
             </div>
         `;
     }
-//Add full forecast to the HTML. 
+    //Add full forecast to the HTML. 
     forecastWeather.append(`
         <h3 class="d-flex flex-wrap">5 Day Forecast:</h3>
         <div class="forecast-days d-flex flex-row">${output}</div>
@@ -67,3 +67,34 @@ function displayForecastWeather(forecastData) {
 function filterByDateTime(forecastDate) {
     return dayjs(forecastDate.dt_txt).hour() === 12;
 }
+
+function addToSearchHistory() {
+    var location = searchInput.val();
+    //Check if the search field is empty. If so, the function stops and takes no further action.
+    if (location == '') {
+        return;
+    }
+    //Check if the location is already in the search history (localStorageArray). If it already exists, the function stops.
+    if (localStorageArray.indexOf(location) > -1) {
+        return;
+    }
+    //Checks if there is no search history stored in localStorage. If so, add the current location to the localStorageArray array.
+    if (localStorage.getItem('location') == null) {
+        localStorageArray.push(location);
+    } else {
+        localStorageArray = JSON.parse(localStorage.getItem('location'));
+
+        if (localStorageArray.indexOf(location) === -1) {
+            localStorageArray.push(location);
+        }
+    }
+    //Add a new button to the search history in the html.
+    searchHistory.append(`
+        <button data-location="${location}" type="button" class="location-history btn btn-secondary btn-block">${location}</button>
+    `);
+    //Store search history in local storage
+    localStorage.setItem('location', JSON.stringify(localStorageArray));
+
+    clickEventToPreviousButtons();
+}
+
