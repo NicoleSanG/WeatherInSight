@@ -97,3 +97,19 @@ function addToSearchHistory() {
 
     clickEventToPreviousButtons();
 }
+//Function to load previous search terms from local storage.
+function localPreviousSearches() {
+    if (localStorage.getItem('location') != null) {
+        //if there is history in localStorage, get the array and assign it to localStorageArray
+        localStorageArray = JSON.parse(localStorage.getItem('location'));
+        //For loop to iterate over the array and add buttons to the search history in the HTML
+        for (var i = 0; i < localStorageArray.length; i++) {
+            var place = localStorageArray[i];
+            searchHistory.append(`
+                <button data-location="${place}" type="button" class="location-history btn btn-secondary btn-block">${place}</button>
+            `);
+        }
+    }
+    clickEventToPreviousButtons();
+}
+
