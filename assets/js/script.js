@@ -130,18 +130,18 @@ function getWeather(event) {
         alert('Please enter a valid location.');  // Show an alert with an error message.
         return; // Exit the function if there is an error
     }
-//AJAX request to get current weather data from the OpenWeatherMap API
+    //AJAX request to get current weather data from the OpenWeatherMap API
     $.get(`https://api.openweathermap.org/data/2.5/weather?q=${searchInput.val()}&appid=${apiKey}&units=metric`)
         .then(function (currentData) {  //Get longitude and latitude from the current weather data.
             var lon = currentData.coord.lon;
             var lat = currentData.coord.lat;
             displayCurrentWeather(currentData);  //Display the current weather information.
-//AJAX request to get forecasted weather data based on the coordinates.
+            //AJAX request to get forecasted weather data based on the coordinates.
             $.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`)
                 .then(function (forecastData) {
                     displayForecastWeather(forecastData);
                 });
-//Add the current location to the search history.
+            //Add the current location to the search history.
             addToSearchHistory();
             searchInput.val('');
         })
@@ -162,11 +162,32 @@ function clearLocalStorageAndButtons() {
     locationHistory.empty(); //Clear location history buttons.
     localStorageArray = [];  //Clear previously searched terms array.
 
-//Add click event to reset buttons
+    //Add click event to reset buttons
     clickEventToPreviousButtons();
 }
+//Initialization function.
+function init() {
+    localPreviousSearches(); //load previous searches from local storage.
+//Click event listener to the search button.
+    searchButton.click(function (event) {
+        event.preventDefault(); //Prevent the default form submission behavior.
+        getWeather(); //Trigger the function to get weather based on user input.
+    });
+//Keypress event listener to the search input. This allows the weather search to be performed when the user presses the "Enter" key instead of clicking the search button.
+    searchInput.keypress(function (event) {
+        if (event.which == '13') { //"Enter" key code is 13.
+            event.preventDefault();
+            getWeather();
+        }
+    });
 
-
+//Add click event for clearing storage and buttons
+    $('#clear-button').click(function () {
+        clearLocalStorageAndButtons();
+    });
+}
+// Call the initialization function
+init();
 
 
 
