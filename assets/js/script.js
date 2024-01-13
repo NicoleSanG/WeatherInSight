@@ -59,8 +59,12 @@ function displayForecastWeather(forecastData) {
     }
     //Add full forecast to the HTML. 
     forecastWeather.append(`
+    <div class="container">
+    <div class="mt-3 jumbotron jumbotron-fluid p-4">
         <h3 class="d-flex flex-wrap">5 Day Forecast:</h3>
         <div class="forecast-days d-flex flex-row">${output}</div>
+        </div>
+        </div>
     `);
 }
 //Filters the forecast data to show only information relevant to 12:00 noon
@@ -168,12 +172,12 @@ function clearLocalStorageAndButtons() {
 //Initialization function.
 function init() {
     localPreviousSearches(); //load previous searches from local storage.
-//Click event listener to the search button.
+    //Click event listener to the search button.
     searchButton.click(function (event) {
         event.preventDefault(); //Prevent the default form submission behavior.
         getWeather(); //Trigger the function to get weather based on user input.
     });
-//Keypress event listener to the search input. This allows the weather search to be performed when the user presses the "Enter" key instead of clicking the search button.
+    //Keypress event listener to the search input. This allows the weather search to be performed when the user presses the "Enter" key instead of clicking the search button.
     searchInput.keypress(function (event) {
         if (event.which == '13') { //"Enter" key code is 13.
             event.preventDefault();
@@ -181,7 +185,7 @@ function init() {
         }
     });
 
-//Add click event for clearing storage and buttons
+    //Add click event for clearing storage and buttons
     $('#clear-button').click(function () {
         clearLocalStorageAndButtons();
     });
