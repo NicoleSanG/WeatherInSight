@@ -32,3 +32,37 @@ function displayCurrentWeather(currentData) {
         </div>
     `);
 }
+//Function to display forecast weather for the next 5 days
+function displayForecastWeather(forecastData) {
+    console.log(forecastData);
+    forecastWeather.html(''); //Clear any existing content within the element before adding new information
+//Filters the forecast data to show only information relevant to 12:00 noon.
+    var forecastDays = forecastData.list.filter(filterByDateTime);
+    console.log(forecastDays);
+
+    var output = '';
+//For loop  to iterate through the forecast days that have been filtered.
+    for (let index = 0; index < forecastDays.length; index++) {
+        var forecast = forecastDays[index];
+        var forecastDay = dayjs(forecast.dt * 1000).format('DD/MM/YYYY');
+        var weatherIcon = forecast.weather[0];
+// Add HTML structure for forecast day
+        output += `
+            <div class="forecast-item shadow-lg p-3 rb-5 bg-white rounded">
+                <p class="text-center mb-4 font-weight-bold">${forecastDay}</p>
+                <img src="https://openweathermap.org/img/w/${weatherIcon.icon}.png" alt="${weatherIcon.description}"/>
+                <p class="mt-4">Temp: ${Math.round(forecast.main.temp)} °C</p>
+                <p>Wind: ${Math.round(forecast.wind.speed)} M/S</p>
+                <p>Humidity: ${forecast.main.humidity}%</p>
+            </div>
+        `;
+    }
+//Add full forecast to the HTML. 
+    forecastWeather.append(`
+        <h3 class="d-flex flex-wrap">5 Day Forecast:</h3>
+        <div class="forecast-days d-flex flex-row">${output}</div>
+    `);
+}
+
+
+
