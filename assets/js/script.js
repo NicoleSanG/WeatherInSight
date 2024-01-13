@@ -122,6 +122,43 @@ function clickEventToPreviousButtons() {
         getWeather();
     });
 }
+//Function to get weather information based on user input.
+function getWeather(event) {
+    // Check if the search input is empty or not a number.
+    if (searchInput.val() == '' && !isNaN(searchInput.val())) {
+        // Show error message without using modal
+        alert('Please enter a valid location.');  // Show an alert with an error message.
+        return; // Exit the function if there is an error
+    }
+//AJAX request to get current weather data from the OpenWeatherMap API
+    $.get(`https://api.openweathermap.org/data/2.5/weather?q=${searchInput.val()}&appid=${apiKey}&units=metric`)
+        .then(function (currentData) {  //Get longitude and latitude from the current weather data.
+            var lon = currentData.coord.lon;
+            var lat = currentData.coord.lat;
+            displayCurrentWeather(currentData);  //Display the current weather information.
+//AJAX request to get forecasted weather data based on the coordinates.
+            $.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`)
+                .then(function (forecastData) {
+                    displayForecastWeather(forecastData);
+                });
+//Add the current location to the search history.
+            addToSearchHistory();
+            searchInput.val('');
+        })
+        .fail(function (error) {
+            if (error.responseJSON.cod == '404') {
+                // Show error message with alert
+                alert('Location does not exist.');
+                searchInput.val('');
+                return;
+            }
+        });
+}
+
+
+
+
+
 
 
 
