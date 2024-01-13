@@ -26,7 +26,7 @@ function displayCurrentWeather(currentData) {
             <div class="container">
                 <h2 class="ml-2">${currentData.name} (${currentDay})<img class="ml-4" src="https://openweathermap.org/img/w/${weatherIcon.icon}.png" alt="${weatherIcon.description}"/></h2>
                 <p class="ml-2">Temp: ${Math.round(currentData.main.temp)} °C</p>
-                <p class="ml-2">Wind: ${Math.round(currentData.wind.speed)} M/S</p>
+                <p class="ml-2">Wind: ${Math.round(currentData.wind.speed)} KPH</p>
                 <p class="ml-2">Humidity: ${currentData.main.humidity}%</p>
             </div>
         </div>
@@ -63,6 +63,7 @@ function displayForecastWeather(forecastData) {
         <div class="forecast-days d-flex flex-row">${output}</div>
     `);
 }
-
-
-
+//Filters the forecast data to show only information relevant to 12:00 noon
+function filterByDateTime(forecastDate) {
+    return dayjs(forecastDate.dt_txt).hour() === 12;
+}
