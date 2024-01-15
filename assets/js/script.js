@@ -22,7 +22,7 @@ function displayCurrentWeather(currentData) {
     console.log(currentDay);
     //Display current weather information in HTML
     currentWeather.append(`
-        <div class="mt-3 jumbotron jumbotron-fluid p-4">
+        <div class="mt-3 jumbotron jumbotron-fluid p-4 current-border">
             <div class="container">
                 <h2 class="ml-2">${currentData.name} (${currentDay})<img class="ml-4" src="https://openweathermap.org/img/w/${weatherIcon.icon}.png" alt="${weatherIcon.description}"/></h2>
                 <p class="ml-2">Temp: ${Math.round(currentData.main.temp)} °C</p>
@@ -48,7 +48,7 @@ function displayForecastWeather(forecastData) {
         var weatherIcon = forecast.weather[0];
         // Add HTML structure for forecast day
         output += `
-            <div class="forecast-item shadow-lg p-3 rb-5 bg-white rounded">
+            <div class="forecast-item shadow-lg p-3 rb-5 rounded custom-forecast">
                 <p class="text-center mb-4 font-weight-bold">${forecastDay}</p>
                 <img src="https://openweathermap.org/img/w/${weatherIcon.icon}.png" alt="${weatherIcon.description}"/>
                 <p class="mt-4">Temp: ${Math.round(forecast.main.temp)} °C</p>
