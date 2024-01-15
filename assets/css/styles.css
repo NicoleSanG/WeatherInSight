@@ -25,16 +25,15 @@
     background-color: #3294fc;
     color: white;
 }
-.btn-clear{
-   background-color: #3463bc;
-}
 
 .btn.btn-block {
     width: 100%;
     display: block;
     text-align: center;
     margin-bottom: 1rem;
-    background-color: #91c6ff;
+    background-color: #9ec2e8;
+    margin: 0.5rem;
+    width: 100%;
   }
 
   /*my css*/
@@ -1784,7 +1783,7 @@
     margin: 0.5rem;
     width: 100%;
     background-color: #5098e6;
-    color: #d9e9e8;
+    color: #000000;
   }
   
   .weather-search {
